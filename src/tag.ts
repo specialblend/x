@@ -1,18 +1,23 @@
-export type Tagged<T extends {}, S extends symbol, V = null> = {
+export type Tagged<
+  S extends symbol,
+  V,
+  T extends {}
+  //
+> = {
   [k in keyof T]: T[k];
 } & { [s in S]: V };
 
-export function Tagged<T, S extends symbol, V>(
+export function Tagged<S extends symbol, V, T>(
   tag: S,
   value: V,
   x: T
-): Tagged<T, S, V> {
+): Tagged<S, V, T> {
   return Object.assign({}, x, { [tag]: value });
 }
 
-export function isTagged<T, S extends symbol, V>(
+export function isTagged<S extends symbol, V, T extends {}>(
   tag: S,
-  x: Tagged<T, S, V> | T
-): x is Tagged<T, S, V> {
+  x: Tagged<S, V, T> | T
+): x is Tagged<S, V, T> {
   return tag in x;
 }

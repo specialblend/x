@@ -45,7 +45,7 @@ export function Fail<I, O = unknown>(
   reason: Error | Err,
   ...debug: Labels[]
 ): Fail<I, O> {
-  const err = Err(reason, ...debug);
+  const err = Err(reason.message, ...debug);
   return {
     status: "rejected",
     reason: err,

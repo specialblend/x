@@ -7,22 +7,37 @@ export type Labels = {
   [k: string]: JsonVal;
 };
 
-export type Labeled<T extends {}> = Tagged<T, typeof LABELS, Labels>;
+export type Labeled<
+  T extends {},
+  L extends Labels = Labels
+  //
+> = Tagged<typeof LABELS, L, T>;
 
-export function Labeled<T extends {}>(
-  x: T | Labeled<T>,
-  ...labelsv: Labels[]
-): Labeled<T> {
-  return Tagged(LABELS, Object.assign({}, labels(x), ...labelsv), x);
+export function Labeled<
+  T extends {},
+  L extends Labels = Labels
+  //
+>(x: T | Labeled<T, L>, ...labelsv: Partial<L>[]): Labeled<T, L> {
+  return Tagged(
+    LABELS,
+    Object.assign({}, labels(x), ...labelsv),
+    Object.assign({}, x)
+    //
+  );
 }
 
-export function islabeled<T extends {}>(x: T): x is Labeled<T> {
+export function isLabeled<
+  T extends {},
+  L extends Labels = Labels
+  //
+>(x: T): x is Labeled<T, L> {
   return isTagged(LABELS, x);
 }
 
-export function labels<T extends {}>(x: T | Labeled<T>): Labels {
-  if (islabeled(x)) {
-    return x[LABELS] || {};
-  }
-  return {};
+export function labels<
+  T extends {},
+  L extends Labels = Labels
+  //
+>(x: T | Labeled<T, L>): L {
+  return x[LABELS] || {};
 }
