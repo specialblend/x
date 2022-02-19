@@ -38,3 +38,10 @@ export function IntGenr<R>(salt = 1234) {
         .reduce((p, c) => p + c) % salt
   );
 }
+
+export function MockGenr<R>() {
+  return Generator<jest.Mock, R>(
+    () => jest.fn()
+    //
+  );
+}
