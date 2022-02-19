@@ -27,6 +27,14 @@ export function Ok<O, I = unknown>(value: O): Ok<O, I> {
   };
 }
 
+export function isOk<I, O>(x: Result<I, O>): x is Ok<O, I> {
+  return x.status === "fulfilled";
+}
+
+export function isFail<I, O>(x: Result<I, O>): x is Fail<I, O> {
+  return x.status === "rejected";
+}
+
 export interface Fail<I, O = unknown> extends Result<I, O> {
   status: "rejected";
   value: I;
