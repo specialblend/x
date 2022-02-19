@@ -9,7 +9,7 @@ export function Err(msg: string | Error, ...debug: Labels[]): Err {
   return Labeled(cloneError(msg), ...debug);
 }
 
-export function pitch(msg: string, ...debug: Labels[]): never {
+export function pitch(msg: string | Error, ...debug: Labels[]): never {
   throw Err(msg, ...debug);
 }
 
@@ -37,6 +37,6 @@ function cloneError(e: Error): Error {
   return {
     name,
     message,
-    stack,
+    // stack,
   };
 }
