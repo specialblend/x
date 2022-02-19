@@ -1,5 +1,5 @@
-import { JsonVal } from "./json.ts";
-import { isTagged, Tagged } from "./tag.ts";
+import { JsonVal } from "./json";
+import { istagged, Tagged } from "./tag";
 
 const LABELS = Symbol("labels");
 
@@ -9,19 +9,19 @@ export type Labels = {
 
 export type Labeled<T extends {}> = Tagged<T, typeof LABELS, Labels>;
 
-export function labeled<T extends {}>(
+export function Labeled<T extends {}>(
   x: T | Labeled<T>,
   ...labelsv: Labels[]
 ): Labeled<T> {
   return Tagged(LABELS, Object.assign({}, labels(x), ...labelsv), x);
 }
 
-export function isLabeled<T extends {}>(x: T): x is Labeled<T> {
-  return isTagged(LABELS, x);
+export function islabeled<T extends {}>(x: T): x is Labeled<T> {
+  return istagged(LABELS, x);
 }
 
 export function labels<T extends {}>(x: T | Labeled<T>): Labels {
-  if (isLabeled(x)) {
+  if (islabeled(x)) {
     return x[LABELS] || {};
   }
   return {};

@@ -1,8 +1,8 @@
-import { isLabeled, Labeled, labeled, Labels, labels } from "./label.ts";
+import { islabeled, Labeled, Labels, labels } from "./label";
 
 export interface Err extends Labeled<Error> {
-  code: number;
   message: string;
+  code: number;
 }
 
 export function Err(
@@ -12,19 +12,12 @@ export function Err(
 ): Err {
   const err = typeof msg === "string" ? new Error(msg) : msg;
   if (typeof code_or_labels === "undefined") {
-    return labeled(Object.assign(err, { code: 1 }), ...debug);
+    return Labeled(Object.assign(err, { code: 1 }), ...debug);
   }
   if (typeof code_or_labels === "number") {
-    return labeled(
-      Object.assign(err, { code: code_or_labels }),
-      ...debug,
-    );
+    return Labeled(Object.assign(err, { code: code_or_labels }), ...debug);
   }
-  return labeled(
-    Object.assign(err, { code: 1 }),
-    code_or_labels,
-    ...debug,
-  );
+  return Labeled(Object.assign(err, { code: 1 }), code_or_labels, ...debug);
 }
 
 export function pitch(
@@ -42,11 +35,11 @@ export function panic(
 ): never {
   const err = Err(msg, code_label, ...debug);
   console.error("panic!", msg, labels(err));
-  Deno.exit(err.code);
+  process.exit(err.code);
 }
 
 export function isErr(x: any): x is Err {
-  return typeof x.message === "string" &&
-    typeof x.code === "number" &&
-    isLabeled(x);
+  return (
+    typeof x.message === "string" && typeof x.code === "number" && islabeled(x)
+  );
 }

@@ -1,0 +1,30 @@
+{
+  "name": "@specialblend/x",
+  "version": "0.0.0",
+  "description": "type-safe extension of node standard library",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/specialblend/x.git"
+  },
+  "keywords": [
+    "typescript",
+    "node"
+  ],
+  "author": "cj@specialblend.dev",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/specialblend/x/issues"
+  },
+  "homepage": "https://github.com/specialblend/x#readme",
+  "devDependencies": {
+    "@types/node": "^17.0.18",
+    "jest": "^27.5.1",
+    "prettier": "^2.5.1",
+    "ts-jest": "^27.1.3",
+    "typescript": "^4.5.5"
+  }
+}

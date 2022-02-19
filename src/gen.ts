@@ -1,18 +1,40 @@
+import { createHash } from "crypto";
+
+export type Factory<T> = (key?: string | symbol) => T;
 export type Generator<T, R> = { [key in keyof R]: T };
 
-export type FactoryWorker<T> = (key?: string | symbol) => T;
-export type Factory<T, A extends Array<any>> = (
-  ...args: A
-) => FactoryWorker<T>;
+export function Generator<T, R>(factory: Factory<T>): Generator<T, R> {
+  return new Proxy(
+    {},
+    {
+      get(_, key) {
+        return factory(key);
+      },
+    }
+  ) as Generator<T, R>;
+}
 
-export function Generator<T, R, A extends Array<any>>(
-  factory: Factory<T, A>,
-  ...args: A
-): Generator<T, R> {
-  const gen = factory(...args);
-  return new Proxy({}, {
-    get(_, key) {
-      return gen(key);
-    },
-  }) as Generator<T, R>;
+export function StrGenr<R>(namespace: string = "mock", salt: any = "*") {
+  return Generator<string, R>(
+    (k) => {
+      const key = String(k);
+      const tag = createHash("sha256")
+        .update(key)
+        .update(String(salt))
+        .digest("hex")
+        .substring(0, 7);
+      return `${namespace}:${String(key)}#${tag}`;
+    }
+    //
+  );
+}
+
+export function IntGenr<R>(salt = 1234) {
+  return Generator<number, R>(
+    (k) =>
+      // @ts-ignore
+      [...String(k)]
+        .map((c: string) => c.charCodeAt(0))
+        .reduce((p, c) => p + c) % salt
+  );
 }
