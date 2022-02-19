@@ -32,6 +32,13 @@ export function isErr(x: any): x is Err {
   return typeof x.message === "string" && isLabeled(x);
 }
 
+export function fmtErr(x: Error): any[] {
+  if (isErr(x)) {
+    return [x.message, labels(x)];
+  }
+  return [x];
+}
+
 function cloneError(e: Error): Error {
   const { name, message, stack } = e;
   return {

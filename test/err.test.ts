@@ -1,4 +1,4 @@
-import { Err, isErr, isLabeled, labels, panic, pitch } from "../src";
+import { Err, fmtErr, isErr, isLabeled, labels, panic, pitch } from "../src";
 
 describe("Err", () => {
   describe("when msg is string", () => {
@@ -126,5 +126,26 @@ describe("isErr", () => {
   });
   test("returns false when err is not Err", () => {
     expect(isErr(new Error(msg))).toEqual(false);
+  });
+});
+
+describe("fmtErr", () => {
+  describe("when err is Err", () => {
+    test("it returns message and labels", () => {
+      expect(fmtErr(Err("oops"))).toEqual(["oops", {}]);
+      expect(fmtErr(Err("oops", { foo: "bar" }))).toEqual([
+        "oops",
+        { foo: "bar" },
+      ]);
+      expect(fmtErr(Err("oops", { foo: "bar" }, { baz: "faz" }))).toEqual([
+        "oops",
+        { foo: "bar", baz: "faz" },
+      ]);
+    });
+  });
+  describe("when err is Error", () => {
+    test("it returns err as-is", () => {
+      expect(fmtErr(new Error("oops"))).toEqual([new Error("oops")]);
+    });
   });
 });
