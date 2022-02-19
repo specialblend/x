@@ -40,6 +40,7 @@ export interface Fail<I, O = unknown> extends Result<I, O> {
   value: I;
   reason: Err;
 }
+
 export function Fail<I, O = unknown>(
   value: I,
   reason: Error | Err,
