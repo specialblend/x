@@ -1,5 +1,5 @@
 import { JsonVal } from "./json";
-import { istagged, Tagged } from "./tag";
+import { isTagged, Tagged } from "./tag";
 
 const LABELS = Symbol("labels");
 
@@ -17,7 +17,7 @@ export function Labeled<T extends {}>(
 }
 
 export function islabeled<T extends {}>(x: T): x is Labeled<T> {
-  return istagged(LABELS, x);
+  return isTagged(LABELS, x);
 }
 
 export function labels<T extends {}>(x: T | Labeled<T>): Labels {
