@@ -40,7 +40,11 @@ export function fmtErr(x: Error): any[] {
 }
 
 function cloneError(e: Error): Error {
-  const { name, message, stack } = e;
+  const {
+    name,
+    message,
+    // stack,
+  } = e;
   return {
     name,
     message,
