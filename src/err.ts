@@ -38,7 +38,7 @@ export function panic(
   process.exit(err.code);
 }
 
-export function isErr(x: any): x is Err {
+export function iserr(x: any): x is Err {
   return (
     typeof x.message === "string" && typeof x.code === "number" && islabeled(x)
   );
