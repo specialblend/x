@@ -14,10 +14,10 @@ export type Labeled<
 > = Tagged<typeof LABELS, L, T>;
 
 export function Labeled<
-  T extends {},
+  T extends {} = {},
   L extends Labels = Labels
   //
->(x: T | Labeled<T, L>, ...labelsv: Partial<L>[]): Labeled<T, L> {
+>(x: T | Labeled<T, L>, ...labelsv: L[]): Labeled<T, L> {
   return Tagged(
     LABELS,
     Object.assign({}, labels(x), ...labelsv),
