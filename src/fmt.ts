@@ -3,7 +3,7 @@ import { Labels } from "./label";
 export type Trimmer = (entry: [string, any]) => boolean;
 
 export function fmtl<T extends Record<any, any>>(x: T): Labels {
-  return trimr(
+  return trim(
     x,
     ([key, value]) => rejectComplex([key, value]) && rejectEmpty([key, value])
   );
