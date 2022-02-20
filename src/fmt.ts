@@ -63,3 +63,7 @@ export function rejectEmpty([key, value]: [string, any]) {
 export function rejectComplex([key, value]: [string, any]) {
   return typeof value !== "object";
 }
+
+export function mask(x: any) {
+  return `secret { length: ${String(x).length} }`;
+}
