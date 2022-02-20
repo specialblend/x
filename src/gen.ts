@@ -29,15 +29,15 @@ export function StrGenerator<R>(namespace = "mock") {
   );
 }
 
-export function IntGenerator<R>(salt = 1234) {
+export function IntGenerator<R>(seed = 0) {
   return Generator<number, R>(
-    (k) =>
-      // @ts-ignore
-      [...String(k)]
-        //
-        .map((c) => c.charCodeAt(0))
-        .reduce((p, c) => p + c) %
-      (salt % 13)
+    (key: string) => {
+      for (const char of key) {
+        seed += char.charCodeAt(0);
+      }
+      return Math.round(seed % 13);
+    }
+    //
   );
 }
 

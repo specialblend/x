@@ -211,13 +211,13 @@ describe("IntGenr", () => {
       expect({ foo, bar, baz }).toMatchInlineSnapshot(`
         Object {
           "bar": 9,
-          "baz": 5,
-          "foo": 0,
+          "baz": 1,
+          "foo": 12,
         }
       `);
     });
   });
-  describe("with salt", () => {
+  describe("with integer salt", () => {
     test("it generates integers", () => {
       type TestObj = {
         foo: string;
@@ -243,11 +243,28 @@ describe("IntGenr", () => {
       const { foo, bar, baz } = IntGenerator<TestObj>(salt);
       expect({ foo, bar, baz }).toMatchInlineSnapshot(`
         Object {
-          "bar": 1,
-          "baz": 9,
-          "foo": 5,
+          "bar": 7,
+          "baz": 12,
+          "foo": 10,
         }
       `);
+    });
+  });
+  describe("with float salt", () => {
+    test("it generates integers", () => {
+      type TestObj = {
+        foo: string;
+        bar: number;
+        baz: string;
+      };
+      const salt = Math.random();
+      const { foo, bar, baz } = IntGenerator<TestObj>(salt);
+      expect(typeof foo).toEqual("number");
+      expect(Math.round(foo)).toEqual(foo);
+      expect(typeof bar).toEqual("number");
+      expect(Math.round(bar)).toEqual(bar);
+      expect(typeof baz).toEqual("number");
+      expect(Math.round(baz)).toEqual(baz);
     });
   });
 });
