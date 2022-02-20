@@ -1,5 +1,7 @@
+import type { Labels } from "./label";
+
+import { labels } from "./label";
 import { Err, pitch } from "./err";
-import { labels, Labels } from "./label";
 
 export interface Result<I, O> {
   status: "fulfilled" | "rejected";

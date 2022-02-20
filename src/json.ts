@@ -1,5 +1,5 @@
-import { pitch } from "./err";
 import { Safely } from "./result";
+import { pitch } from "./err";
 
 export type Json = JsonVal | JsonRec | Json[];
 export type JsonVal = string | number | boolean | null;

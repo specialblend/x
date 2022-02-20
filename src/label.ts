@@ -1,4 +1,5 @@
-import { JsonVal } from "./json";
+import type { JsonVal } from "./json";
+
 import { isTagged, Tagged } from "./tag";
 
 const LABELS = Symbol("labels");

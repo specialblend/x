@@ -1,7 +1,7 @@
-import { Labels } from "./label";
+import type { Labels } from "./label";
 
 export type Trimmer = (x: [string, any]) => boolean;
-export type Linter<T> = (...debug: Labels[]) => (x: Partial<T>) => T|never;
+export type Linter<T> = (...debug: Labels[]) => (x: Partial<T>) => T | never;
 
 export function fmtl<T extends Record<any, any>>(x: T): Labels {
   return trim(

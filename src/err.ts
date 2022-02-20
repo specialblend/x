@@ -1,4 +1,6 @@
-import { isLabeled, Labeled, Labels, labels } from "./label";
+import type { Labels } from "./label";
+
+import { isLabeled, Labeled, labels } from "./label";
 
 export type Err = Labeled<Error>;
 
@@ -23,7 +25,7 @@ export function panic(
     console.error("panic!", msg, labels(err));
     process.exit(code_label);
   }
-  const err = Err(msg, code_label, ...debug);
+  const err = Err(msg, ...debug);
   console.error("panic!", msg, labels(err));
   process.exit(1);
 }

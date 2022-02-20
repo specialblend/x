@@ -14,7 +14,7 @@ export function Generator<T, R>(factory: Factory<T>): Generator<T, R> {
   ) as Generator<T, R>;
 }
 
-export function StrGenr<R>(namespace: string = "mock") {
+export function StrGenr<R>(namespace = "mock") {
   return Generator<string, R>(
     (k) => {
       const key = String(k);
