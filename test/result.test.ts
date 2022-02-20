@@ -1,5 +1,5 @@
-import { Fail, isFail, isOk, Ok, Safely } from "../result";
-import { Err } from "../err";
+import { Fail, isFail, isOk, Ok, Safely } from "../src/result";
+import { Err } from "../src/err";
 
 describe("Ok", () => {
   test("it returns expected value", () => {
@@ -66,24 +66,36 @@ describe("Safely", () => {
     });
   });
   describe("in async mode", () => {
-    const assertOddAsync = jest.fn(async (x) => {
-      if (x % 2 === 0) {
-        throw new Error("x is not odd");
+    const assertOddAsync = jest.fn(
+      //
+      async (x) => {
+        if (x % 2 === 0) {
+          throw new Error("x is not odd");
+        }
+        return x;
       }
-      return x;
-    });
+    );
     const safelyAssertOddAsync = Safely(assertOddAsync, Promise);
-    test("assertOddAsync throws when x is even", () => {
-      expect(assertOddAsync(2)).rejects.toThrow("x is not odd");
+    test("assertOddAsync throws when x is even", async () => {
+      try {
+        await assertOddAsync(2);
+      } catch (err) {
+        expect(err.message).toMatch("x is not odd");
+      }
     });
-    test("assertOddAsync does not throw when x is odd", () => {
-      expect(assertOddAsync(1)).resolves.toEqual(1);
+    test("assertOddAsync does not throw when x is odd", async () => {
+      const threw = jest.fn();
+      expect(await assertOddAsync(1).catch(threw)).toEqual(1);
+      expect(threw).not.toHaveBeenCalled();
     });
     test("Safely(assertOddAsync) returns Fail result when x is even", async () => {
-      expect(isFail(await safelyAssertOddAsync(2))).toEqual(true);
-      expect(
-        (async () => (await safelyAssertOddAsync(2)).unwrap())()
-      ).rejects.toThrow("x is not odd");
+      const res = await safelyAssertOddAsync(2);
+      expect(isFail(res)).toEqual(true);
+      try {
+        res.unwrap();
+      } catch (err) {
+        expect(err.message).toMatch("x is not odd");
+      }
     });
     test("Safely(assertOddAsync) returns Ok result when x is odd", async () => {
       expect(isOk(await safelyAssertOddAsync(1))).toEqual(true);

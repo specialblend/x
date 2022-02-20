@@ -1,4 +1,4 @@
-import { IntGenerator, MockGenerator, StrGenerator } from "../gen";
+import { IntGenerator, MockGenerator, StrGenerator } from "../src/gen";
 
 describe("StrGenr", () => {
   describe("with default namespace, salt", () => {
