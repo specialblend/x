@@ -46,6 +46,6 @@ export function rejectComplex([key, value]: [string, any]) {
   return typeof key === "string" && typeof value !== "object";
 }
 
-export function mask(x: never) {
+export function mask(x: any) {
   return `secret { length: ${String(x).length} }`;
 }
