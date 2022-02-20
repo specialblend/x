@@ -25,7 +25,7 @@ export function panic(
     console.error("panic!", msg, labels(err));
     process.exit(code_label);
   }
-  const err = Err(msg, ...debug);
+  const err = Err(msg, code_label || {}, ...debug);
   console.error("panic!", msg, labels(err));
   process.exit(1);
 }
