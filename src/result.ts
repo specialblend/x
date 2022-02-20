@@ -63,20 +63,20 @@ export function Fail<I, O = unknown>(
 }
 
 export type P = PromiseConstructor;
+export type Wrapped<I, O> = (x: I) => Result<I, O>;
+export type WrappedP<I, O> = (x: I) => Promise<Result<I, O>>;
 export type Fn<I, O> = (x: I) => O;
+export type FnP<I, O> = (x: I) => Promise<O>;
 
-export function Safely<I, O>(fn: Fn<I, O>): (x: I) => Result<I, O>;
+export function Safely<I, O>(fn: Fn<I, O>): Wrapped<I, O>;
+export function Safely<I, O>(fn: FnP<I, O>, mode: P): WrappedP<I, O>;
 
-export function Safely<I, O>(
-  fn: Fn<I, O | Promise<O>>,
-  mode: P
-): (x: I) => Promise<Result<I, O>>;
-
-export function Safely<I, O>(fn: Fn<I, O>, mode?: P) {
+export function Safely<I, O>(fn: Fn<I, O> | FnP<I, O>, mode?: P) {
   if (mode === Promise) {
     return async function wrapped(x: I): Promise<Result<I, O>> {
       try {
-        return Ok(await fn(x));
+        const res = await (fn as FnP<I, O>)(x);
+        return Ok(res);
       } catch (err) {
         return Fail(x, err);
       }
@@ -84,7 +84,8 @@ export function Safely<I, O>(fn: Fn<I, O>, mode?: P) {
   }
   return function wrapped(x: I): Result<I, O> {
     try {
-      return Ok(fn(x));
+      const res = (fn as Fn<I, O>)(x);
+      return Ok(res);
     } catch (err) {
       return Fail(x, err);
     }

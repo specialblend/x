@@ -1,6 +1,6 @@
 import type { Labels } from "./label";
 
-export type Trimmer = (x: [string, any]) => boolean;
+export type Trimmer = (x: [any, any]) => boolean;
 export type Linter<T> = (...debug: Labels[]) => (x: Partial<T>) => T | never;
 
 export function fmtl<T extends Record<any, any>>(x: T): Labels {
@@ -10,7 +10,7 @@ export function fmtl<T extends Record<any, any>>(x: T): Labels {
   );
 }
 
-export function trimr<T extends Record<any, any>, K extends keyof T>(
+export function trimr<T extends Record<any, any>>(
   rec: T,
   trimmer: Trimmer = rejectEmpty
 ): Partial<T> {
@@ -33,20 +33,19 @@ export function trimv<T = any>(x: Array<T>): T[] {
   return x.filter((x) => rejectEmpty(["", x]));
 }
 
-export function rejectEmpty([key, value]: [string, any]) {
+export function rejectEmpty([_, value]: [any, any]) {
   return (
-    typeof key === "string" &&
-    (typeof value === "boolean" ||
-      typeof value === "number" ||
-      typeof value === "bigint" ||
-      trims(value))
+    typeof value === "boolean" ||
+    typeof value === "number" ||
+    typeof value === "bigint" ||
+    Boolean(trims(value))
   );
 }
 
 export function rejectComplex([key, value]: [string, any]) {
-  return typeof value !== "object";
+  return typeof key === "string" && typeof value !== "object";
 }
 
-export function mask(x: any) {
+export function mask(x: never) {
   return `secret { length: ${String(x).length} }`;
 }

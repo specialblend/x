@@ -18,7 +18,6 @@ export function Labeled<T>(
     LABELS,
     Object.assign({}, labels(x), ...labelsv),
     Object.assign({}, x)
-    //
   );
 }
 

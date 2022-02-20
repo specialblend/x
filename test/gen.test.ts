@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+
 import { IntGenerator, MockGenerator, StrGenerator } from "../src/gen";
 
 describe("StrGenr", () => {
@@ -60,16 +62,16 @@ describe("StrGenr", () => {
       const { alpha, bravo, charlie } = testGenr;
       expect({ foo, bar, baz }).toMatchInlineSnapshot(`
         Object {
-          "bar": "mock:bar#9fce908",
-          "baz": "mock:baz#db5fae1",
-          "foo": "mock:foo#08810ac",
+          "bar": "mock:bar#fcde2b2",
+          "baz": "mock:baz#baa5a09",
+          "foo": "mock:foo#2c26b46",
         }
       `);
       expect({ alpha, bravo, charlie }).toMatchInlineSnapshot(`
         Object {
-          "alpha": "mock:alpha#1504b5b",
-          "bravo": "mock:bravo#af1f8de",
-          "charlie": "mock:charlie#5f01d24",
+          "alpha": "mock:alpha#8ed3f6a",
+          "bravo": "mock:bravo#f144a69",
+          "charlie": "mock:charlie#b9dd960",
         }
       `);
     });
@@ -169,16 +171,16 @@ describe("StrGenr", () => {
       })();
       expect(test_set_1).toMatchInlineSnapshot(`
         Object {
-          "bar": "foo:bar#88ecde9",
-          "baz": "foo:baz#1fdb2a1",
-          "foo": "foo:foo#c5aac59",
+          "bar": "foo:bar#fcde2b2",
+          "baz": "foo:baz#baa5a09",
+          "foo": "foo:foo#2c26b46",
         }
       `);
       expect(test_set_2).toMatchInlineSnapshot(`
         Object {
-          "bar": "bar:bar#08a2d3c",
-          "baz": "bar:baz#9f6aff2",
-          "foo": "bar:foo#c3ab8ff",
+          "bar": "bar:bar#fcde2b2",
+          "baz": "bar:baz#baa5a09",
+          "foo": "bar:foo#2c26b46",
         }
       `);
     });
@@ -210,9 +212,9 @@ describe("IntGenr", () => {
       const { foo, bar, baz } = IntGenerator<TestObj>();
       expect({ foo, bar, baz }).toMatchInlineSnapshot(`
         Object {
-          "bar": 9,
-          "baz": 1,
-          "foo": 12,
+          "bar": 18,
+          "baz": 89,
+          "foo": 78,
         }
       `);
     });
@@ -243,9 +245,9 @@ describe("IntGenr", () => {
       const { foo, bar, baz } = IntGenerator<TestObj>(salt);
       expect({ foo, bar, baz }).toMatchInlineSnapshot(`
         Object {
-          "bar": 7,
-          "baz": 12,
-          "foo": 10,
+          "bar": 2,
+          "baz": 73,
+          "foo": 62,
         }
       `);
     });
