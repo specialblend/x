@@ -9,6 +9,7 @@ export interface Result<I, O> {
   reason?: Err;
   getOr(x: O): O;
   unwrap(): O | never;
+  expect(msg: string): O | never;
 }
 
 export interface Ok<O, I = unknown> extends Result<I, O> {
@@ -24,6 +25,9 @@ export function Ok<O, I = unknown>(value: O): Ok<O, I> {
       return value;
     },
     unwrap(): O {
+      return value;
+    },
+    expect(_): O {
       return value;
     },
   };
@@ -58,6 +62,9 @@ export function Fail<I, O = unknown>(
     },
     unwrap(): O | never {
       return pitch(err.message, labels(err), ...debug);
+    },
+    expect(msg: string, ...debug: Labels[]): O | never {
+      return pitch(msg, ...debug);
     },
   };
 }

@@ -2,22 +2,43 @@ import { Fail, isFail, isOk, Ok, Safely } from "../src/result";
 import { Err } from "../src/err";
 
 describe("Ok", () => {
-  test("it returns expected value", () => {
+  test("it has expected status", () => {
     expect(Ok("hello").status).toEqual("fulfilled");
+  });
+  test("it has expected value", () => {
     expect(Ok("hello").value).toEqual("hello");
+  });
+  test("getOr returns original value", () => {
     expect(Ok("hello").getOr("world")).toEqual("hello");
+  });
+  test("unwrap does not throw", () => {
     expect(() => Ok("hello").unwrap()).not.toThrow();
-    expect(Ok("hello").unwrap()).toEqual("hello");
+  });
+  test("expect does not throw", () => {
+    expect(() => Ok("hello").expect("oops")).not.toThrow();
   });
 });
 
 describe("Fail", () => {
-  test("it returns expected value", () => {
+  test("it has expected status", () => {
     expect(Fail("hello", Err("oops")).status).toEqual("rejected");
+  });
+  test("it has expected value", () => {
     expect(Fail("hello", Err("oops")).value).toEqual("hello");
+  });
+  test("it has expected reason", () => {
     expect(Fail("hello", Err("oops")).reason).toEqual(Err("oops"));
+  });
+  test("getOr returns fallback value", () => {
     expect(Fail("hello", Err("oops")).getOr("world")).toEqual("world");
+  });
+  test("unwrap throws", () => {
     expect(() => Fail("hello", Err("oops")).unwrap()).toThrow("oops");
+  });
+  test("expect throws", () => {
+    expect(() =>
+      Fail("hello", Err("oops")).expect("expected not to fail!")
+    ).toThrow("expected not to fail!");
   });
 });
 
