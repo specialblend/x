@@ -6,7 +6,6 @@ describe("Err", () => {
       const msg = "test error message";
       const err = Err(msg);
       test("it returns Labeled<Error> with empty labels", () => {
-        // expect(err instanceof Error).toEqual(true);
         expect(err.message).toEqual(msg);
         expect(isLabeled(err)).toEqual(true);
         expect(labels(err)).toEqual({});
@@ -23,7 +22,6 @@ describe("Err", () => {
       const debug = [label_foo, label_baz];
       const err = Err(msg, ...debug);
       test("it returns Labeled<Error> with labels", () => {
-        // expect(err instanceof Error).toEqual(true);
         expect(err.message).toEqual(msg);
         expect(isLabeled(err)).toEqual(true);
         expect(labels(err)).toEqual({ ...label_foo, ...label_baz });
@@ -34,7 +32,6 @@ describe("Err", () => {
 
 describe("pitch", () => {
   const msg = "test error message";
-  const code = 1234;
   const label_foo = {
     foo: "bar",
   };
@@ -112,7 +109,6 @@ describe("panic", () => {
 
 describe("isErr", () => {
   const msg = "test error message";
-  const code = 1234;
   const label_foo = {
     foo: "bar",
   };
