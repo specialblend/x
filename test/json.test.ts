@@ -34,7 +34,7 @@ describe("parseJsonSafe", () => {
       expect(isOk(my_json_res)).toEqual(true);
     });
     test("it parses as expected", () => {
-      expect(my_json_res.getOr({})).toEqual(my_obj);
+      expect(my_json_res.or({})).toEqual(my_obj);
     });
   });
   describe("when str is invalid json", () => {

@@ -4,7 +4,7 @@ import { pitch } from "./err";
 
 export interface Option<T> {
   value?: T;
-  getOr(x: T): T;
+  or(x: T): T;
   unwrap(): T | never;
   expect(msg: string, ...debug: Labels[]): T | never;
   map<R>(fn: (i: T) => R): Option<R>;
@@ -12,14 +12,15 @@ export interface Option<T> {
 
 export interface Some<T> {
   value: T;
-  getOr(x: T): T;
+  or(x: T): T;
   unwrap(): T | never;
   expect(msg: string, ...debug: Labels[]): T;
   map<R>(fn: (i: T) => R): Some<R>;
 }
 
 export interface None<T> extends Option<T> {
-  getOr(x: T): T;
+  or(x: T): T;
+  unwrap(): never;
   expect(msg: string, ...debug: Labels[]): never;
   map<R>(fn: (i: T) => R): None<R>;
 }
@@ -27,7 +28,7 @@ export interface None<T> extends Option<T> {
 export function Some<T>(value: T): Some<T> {
   return {
     value,
-    getOr(o: T): T {
+    or(o: T): T {
       return value;
     },
     unwrap(): T {
@@ -44,10 +45,10 @@ export function Some<T>(value: T): Some<T> {
 
 export function None<T>(): None<T> {
   return {
-    getOr(o: T): T {
+    or(o: T): T {
       return o;
     },
-    unwrap(): T {
+    unwrap(): never {
       return pitch("no value");
     },
     expect(msg: string, ...debug: Labels[]): never {

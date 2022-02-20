@@ -8,8 +8,8 @@ describe("Ok", () => {
   test("it has expected value", () => {
     expect(Ok("hello").value).toEqual("hello");
   });
-  test("getOr returns original value", () => {
-    expect(Ok("hello").getOr("world")).toEqual("hello");
+  test("or returns original value", () => {
+    expect(Ok("hello").or("world")).toEqual("hello");
   });
   test("unwrap does not throw", () => {
     expect(() => Ok("hello").unwrap()).not.toThrow();
@@ -29,8 +29,8 @@ describe("Fail", () => {
   test("it has expected reason", () => {
     expect(Fail("hello", Err("oops")).reason).toEqual(Err("oops"));
   });
-  test("getOr returns fallback value", () => {
-    expect(Fail("hello", Err("oops")).getOr("world")).toEqual("world");
+  test("or returns fallback value", () => {
+    expect(Fail("hello", Err("oops")).or("world")).toEqual("world");
   });
   test("unwrap throws", () => {
     expect(() => Fail("hello", Err("oops")).unwrap()).toThrow("oops");

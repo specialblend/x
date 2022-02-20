@@ -5,8 +5,8 @@ describe("Some", () => {
   test("has value foo", () => {
     expect(some_foo.value).toEqual("foo");
   });
-  test("getOr returns original value", () => {
-    expect(some_foo.getOr("bar")).toEqual("foo");
+  test("or returns original value", () => {
+    expect(some_foo.or("bar")).toEqual("foo");
   });
   test("unwrap returns original value", () => {
     expect(some_foo.unwrap()).toEqual("foo");
@@ -17,7 +17,7 @@ describe("Some", () => {
   test("map returns Some", () => {
     const some_foo_star = some_foo.map((str) => `${str}*`);
     expect(some_foo_star.value).toEqual("foo*");
-    expect(some_foo_star.getOr("bar")).toEqual("foo*");
+    expect(some_foo_star.or("bar")).toEqual("foo*");
   });
 });
 
@@ -26,8 +26,8 @@ describe("None", () => {
   test("index 0 is undefined", () => {
     expect(none_foo[0]).toBeUndefined();
   });
-  test("getOr returns fallback value", () => {
-    expect(none_foo.getOr("bar")).toEqual("bar");
+  test("or returns fallback value", () => {
+    expect(none_foo.or("bar")).toEqual("bar");
   });
   test("unwrap throws", () => {
     expect(() => none_foo.unwrap()).toThrow();
@@ -38,7 +38,7 @@ describe("None", () => {
   test("map returns None", () => {
     const none_foo_star = none_foo.map((str) => `${str}*`);
     expect(none_foo_star.value).toBeUndefined();
-    expect(none_foo_star.getOr("bar")).toEqual("bar");
+    expect(none_foo_star.or("bar")).toEqual("bar");
   });
 });
 

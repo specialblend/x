@@ -7,7 +7,7 @@ export interface Result<I, O> {
   status: "fulfilled" | "rejected";
   value: I | O;
   reason?: Err;
-  getOr(x: O): O;
+  or(x: O): O;
   unwrap(): O | never;
   expect(msg: string): O | never;
 }
@@ -21,7 +21,7 @@ export function Ok<O, I = unknown>(value: O): Ok<O, I> {
   return {
     status: "fulfilled",
     value,
-    getOr(x: O): O {
+    or(x: O): O {
       return value;
     },
     unwrap(): O {
@@ -57,7 +57,7 @@ export function Fail<I, O = unknown>(
     status: "rejected",
     reason: err,
     value,
-    getOr(x: O): O {
+    or(x: O): O {
       return x;
     },
     unwrap(): O | never {
