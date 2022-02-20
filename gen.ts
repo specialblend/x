@@ -14,7 +14,7 @@ export function Generator<T, R>(factory: Factory<T>): Generator<T, R> {
   ) as Generator<T, R>;
 }
 
-export function StrGenr<R>(namespace = "mock") {
+export function StrGenerator<R>(namespace = "mock") {
   return Generator<string, R>(
     (k) => {
       const key = String(k);
@@ -29,7 +29,7 @@ export function StrGenr<R>(namespace = "mock") {
   );
 }
 
-export function IntGenr<R>(salt = 1234) {
+export function IntGenerator<R>(salt = 1234) {
   return Generator<number, R>(
     (k) =>
       // @ts-ignore
@@ -41,7 +41,7 @@ export function IntGenr<R>(salt = 1234) {
   );
 }
 
-export function MockGenr<R>() {
+export function MockGenerator<R>() {
   return Generator<jest.Mock, R>(
     () => jest.fn()
     //

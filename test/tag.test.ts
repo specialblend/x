@@ -1,4 +1,4 @@
-import { isTagged, Tagged } from "../src";
+import { isTagged, Tagged } from "../tag";
 
 describe("isTagged", () => {
   test("returns false for non tagged object", () => {

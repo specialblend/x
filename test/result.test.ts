@@ -1,4 +1,5 @@
-import { Err, Fail, isFail, isOk, Ok, Safely } from "../src";
+import { Fail, isFail, isOk, Ok, Safely } from "../result";
+import { Err } from "../err";
 
 describe("Ok", () => {
   test("it returns expected value", () => {

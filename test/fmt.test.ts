@@ -1,4 +1,6 @@
-import { fmtl, Labels } from "../src";
+import type { Labels } from "../label";
+
+import { fmtl } from "../fmt";
 
 describe("fmtl", () => {
   type FmtLabelsTest = [string, { input: Record<any, any>; output: Labels }];

@@ -1,4 +1,5 @@
-import { isFail, isOk, parseJson, parseJsonSafe } from "../src";
+import { isFail, isOk } from "../result";
+import { parseJson, parseJsonSafe } from "../json";
 
 describe("parseJson", () => {
   describe("when str is valid json", () => {

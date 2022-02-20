@@ -1,4 +1,4 @@
-import { isLabeled, Labeled, labels } from "../src";
+import { isLabeled, Labeled, labels } from "../label";
 
 describe("isLabeled", () => {
   test("returns true when obj is labeled", () => {

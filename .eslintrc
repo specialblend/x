@@ -1,0 +1,72 @@
+{
+  "env": {
+    "es2021": true
+  },
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:@typescript-eslint/recommended-requiring-type-checking",
+    "plugin:prettier/recommended"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "project": "tsconfig.json",
+    "ecmaVersion": 12
+  },
+  "plugins": [
+    "@typescript-eslint",
+    "prettier",
+    "import"
+  ],
+  "rules": {
+    "prefer-const": "error",
+    "prettier/prettier": "error",
+    "@typescript-eslint/no-empty-function": "off",
+    "@typescript-eslint/no-unsafe-argument": "off",
+    "@typescript-eslint/no-unsafe-assignment": "off",
+    "@typescript-eslint/no-unsafe-call": "off",
+    "@typescript-eslint/no-unsafe-member-access": "off",
+    "@typescript-eslint/no-unsafe-return": "off",
+    "@typescript-eslint/unbound-method": "off",
+    "@typescript-eslint/require-await": "off",
+    "@typescript-eslint/consistent-type-imports": [
+      "error",
+      {
+        "prefer": "type-imports"
+      }
+    ],
+    "import/order": [
+      1,
+      {
+        "groups": [
+          "type",
+          "external",
+          "builtin",
+          "internal",
+          "parent",
+          "sibling",
+          "index",
+          "object",
+          "unknown"
+        ],
+        "pathGroups": [
+          {
+            "pattern": ".*/contract",
+            "group": "type",
+            "position": "after"
+          },
+          {
+            "pattern": ".*/__mocks__/**",
+            "group": "unknown",
+            "position": "after"
+          }
+        ],
+        "newlines-between": "always",
+        "alphabetize": {
+          "order": "desc",
+          "caseInsensitive": true
+        }
+      }
+    ]
+  }
+}

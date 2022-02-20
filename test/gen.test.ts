@@ -1,4 +1,4 @@
-import { IntGenr, MockGenr, StrGenr } from "../src";
+import { IntGenerator, MockGenerator, StrGenerator } from "../gen";
 
 describe("StrGenr", () => {
   describe("with default namespace, salt", () => {
@@ -8,7 +8,7 @@ describe("StrGenr", () => {
         bar: number;
         baz: string;
       };
-      const testGenr = StrGenr<TestObj>();
+      const testGenr = StrGenerator<TestObj>();
       const { foo, bar, baz } = testGenr;
       // @ts-ignore
       const { alpha, bravo, charlie } = testGenr;
@@ -29,7 +29,7 @@ describe("StrGenr", () => {
         bar: number;
         baz: string;
       };
-      const testGenr = StrGenr<TestObj>();
+      const testGenr = StrGenerator<TestObj>();
       const test_set_1 = (() => {
         const { foo, bar, baz } = testGenr;
         return { foo, bar, baz };
@@ -54,7 +54,7 @@ describe("StrGenr", () => {
         bar: number;
         baz: string;
       };
-      const testGenr = StrGenr<TestObj>();
+      const testGenr = StrGenerator<TestObj>();
       const { foo, bar, baz } = testGenr;
       // @ts-ignore
       const { alpha, bravo, charlie } = testGenr;
@@ -82,7 +82,7 @@ describe("StrGenr", () => {
         baz: string;
       };
       const namespace = "test";
-      const testGenr = StrGenr<TestObj>(namespace);
+      const testGenr = StrGenerator<TestObj>(namespace);
       const { foo, bar, baz } = testGenr;
       // @ts-ignore
       const { alpha, bravo, charlie } = testGenr;
@@ -104,7 +104,7 @@ describe("StrGenr", () => {
         baz: string;
       };
       const namespace = "test";
-      const testGenr = StrGenr<TestObj>(namespace);
+      const testGenr = StrGenerator<TestObj>(namespace);
       const test_set_1 = (() => {
         const { foo, bar, baz } = testGenr;
         return { foo, bar, baz };
@@ -131,8 +131,8 @@ describe("StrGenr", () => {
       };
       const namespace1 = "foo";
       const namespace2 = "bar";
-      const testGenr1 = StrGenr<TestObj>(namespace1);
-      const testGenr2 = StrGenr<TestObj>(namespace2);
+      const testGenr1 = StrGenerator<TestObj>(namespace1);
+      const testGenr2 = StrGenerator<TestObj>(namespace2);
       const test_set_1 = (() => {
         const { foo, bar, baz } = testGenr1;
         return { foo, bar, baz };
@@ -157,8 +157,8 @@ describe("StrGenr", () => {
       };
       const namespace1 = "foo";
       const namespace2 = "bar";
-      const testGenr1 = StrGenr<TestObj>(namespace1);
-      const testGenr2 = StrGenr<TestObj>(namespace2);
+      const testGenr1 = StrGenerator<TestObj>(namespace1);
+      const testGenr2 = StrGenerator<TestObj>(namespace2);
       const test_set_1 = (() => {
         const { foo, bar, baz } = testGenr1;
         return { foo, bar, baz };
@@ -193,7 +193,7 @@ describe("IntGenr", () => {
         bar: number;
         baz: string;
       };
-      const { foo, bar, baz } = IntGenr<TestObj>();
+      const { foo, bar, baz } = IntGenerator<TestObj>();
       expect(typeof foo).toEqual("number");
       expect(Math.round(foo)).toEqual(foo);
       expect(typeof bar).toEqual("number");
@@ -207,7 +207,7 @@ describe("IntGenr", () => {
         bar: number;
         baz: string;
       };
-      const { foo, bar, baz } = IntGenr<TestObj>();
+      const { foo, bar, baz } = IntGenerator<TestObj>();
       expect({ foo, bar, baz }).toMatchInlineSnapshot(`
         Object {
           "bar": 9,
@@ -225,7 +225,7 @@ describe("IntGenr", () => {
         baz: string;
       };
       const salt = 1337;
-      const { foo, bar, baz } = IntGenr<TestObj>(salt);
+      const { foo, bar, baz } = IntGenerator<TestObj>(salt);
       expect(typeof foo).toEqual("number");
       expect(Math.round(foo)).toEqual(foo);
       expect(typeof bar).toEqual("number");
@@ -240,7 +240,7 @@ describe("IntGenr", () => {
         baz: string;
       };
       const salt = 1337;
-      const { foo, bar, baz } = IntGenr<TestObj>(salt);
+      const { foo, bar, baz } = IntGenerator<TestObj>(salt);
       expect({ foo, bar, baz }).toMatchInlineSnapshot(`
         Object {
           "bar": 1,
@@ -258,7 +258,7 @@ describe("MockGenr", () => {
       foo(): Promise<string>;
       bar(): Promise<number>;
     };
-    const { foo, bar } = MockGenr<TestApi>();
+    const { foo, bar } = MockGenerator<TestApi>();
     expect(typeof foo).toEqual("function");
     expect(typeof bar).toEqual("function");
     expect(typeof foo.mockClear).toEqual("function");

@@ -1,4 +1,5 @@
-import { Err, fmtErr, isErr, isLabeled, labels, panic, pitch } from "../src";
+import { isLabeled, labels } from "../label";
+import { Err, fmtErr, isErr, panic, pitch } from "../err";
 
 describe("Err", () => {
   describe("when msg is string", () => {
