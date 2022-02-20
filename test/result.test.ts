@@ -64,4 +64,29 @@ describe("Safely", () => {
       expect(safelyAssertOdd(1).unwrap()).toEqual(1);
     });
   });
+  describe("in async mode", () => {
+    const assertOddAsync = jest.fn(async (x) => {
+      if (x % 2 === 0) {
+        throw new Error("x is not odd");
+      }
+      return x;
+    });
+    const safelyAssertOddAsync = Safely(assertOddAsync, Promise);
+    test("assertOddAsync throws when x is even", () => {
+      expect(assertOddAsync(2)).rejects.toThrow("x is not odd");
+    });
+    test("assertOddAsync does not throw when x is odd", () => {
+      expect(assertOddAsync(1)).resolves.toEqual(1);
+    });
+    test("Safely(assertOddAsync) returns Fail result when x is even", async () => {
+      expect(isFail(await safelyAssertOddAsync(2))).toEqual(true);
+      expect(
+        (async () => (await safelyAssertOddAsync(2)).unwrap())()
+      ).rejects.toThrow("x is not odd");
+    });
+    test("Safely(assertOddAsync) returns Ok result when x is odd", async () => {
+      expect(isOk(await safelyAssertOddAsync(1))).toEqual(true);
+      expect((await safelyAssertOddAsync(1)).unwrap()).toEqual(1);
+    });
+  });
 });
