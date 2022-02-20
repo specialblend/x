@@ -1,6 +1,13 @@
 import { isLabeled, labels } from "../src/label";
 import { Err, fmtErr, isErr, panic, pitch } from "../src/err";
 
+console.error = jest.fn(console.error);
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+process.exit = jest.fn((code) => {
+  throw String(code);
+});
+
 describe("Err", () => {
   describe("when msg is string", () => {
     describe("when called without debug labels", () => {
