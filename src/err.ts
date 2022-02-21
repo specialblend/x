@@ -45,11 +45,12 @@ function cloneError(e: Error): Error {
   const {
     name,
     message,
-    // stack,
+    stack,
+    //
   } = e;
   return {
     name,
     message,
-    // stack,
+    stack,
   };
 }

@@ -1,7 +1,8 @@
 import type { Labels } from "./label";
 
-import { labels } from "./label";
-import { Err, pitch } from "./err";
+import { Labeled, labels } from "./label";
+import { Err } from "./err";
+import { pitch } from "./err";
 
 export interface Result<I, O> {
   status: "fulfilled" | "rejected";
@@ -52,7 +53,7 @@ export function Fail<I, O = unknown>(
   reason: Error | Err,
   ...debug: Labels[]
 ): Fail<I, O> {
-  const err = Err(reason.message, ...debug);
+  const err = Err(reason, ...debug);
   return {
     status: "rejected",
     reason: err,
@@ -72,26 +73,26 @@ export function Fail<I, O = unknown>(
 export type P = PromiseConstructor;
 export type Wrapped<I, O> = (x: I) => Result<I, O>;
 export type WrappedP<I, O> = (x: I) => Promise<Result<I, O>>;
-export type Fn<I, O> = (x: I) => O;
-export type FnP<I, O> = (x: I) => Promise<O>;
+export type Fn<I, O> = (x: I, ...args: any[]) => O;
+export type FnP<I, O> = (x: I, ...args: any[]) => Promise<O>;
 
 export function Safely<I, O>(fn: Fn<I, O>): Wrapped<I, O>;
 export function Safely<I, O>(fn: FnP<I, O>, mode: P): WrappedP<I, O>;
 
 export function Safely<I, O>(fn: Fn<I, O> | FnP<I, O>, mode?: P) {
   if (mode === Promise) {
-    return async function wrapped(x: I): Promise<Result<I, O>> {
+    return async function wrapped(x: I, ...args): Promise<Result<I, O>> {
       try {
-        const res = await (fn as FnP<I, O>)(x);
+        const res = await (fn as FnP<I, O>)(x, ...args);
         return Ok(res);
       } catch (err) {
         return Fail(x, err);
       }
     };
   }
-  return function wrapped(x: I): Result<I, O> {
+  return function wrapped(x: I, ...args): Result<I, O> {
     try {
-      const res = (fn as Fn<I, O>)(x);
+      const res = (fn as Fn<I, O>)(x, ...args);
       return Ok(res);
     } catch (err) {
       return Fail(x, err);

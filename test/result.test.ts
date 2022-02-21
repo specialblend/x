@@ -27,7 +27,9 @@ describe("Fail", () => {
     expect(Fail("hello", Err("oops")).value).toEqual("hello");
   });
   test("it has expected reason", () => {
-    expect(Fail("hello", Err("oops")).reason).toEqual(Err("oops"));
+    expect(Fail("hello", Err("oops")).reason.message).toEqual(
+      Err("oops").message
+    );
   });
   test("or returns fallback value", () => {
     expect(Fail("hello", Err("oops")).or("world")).toEqual("world");
